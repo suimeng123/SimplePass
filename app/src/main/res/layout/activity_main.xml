@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:text="@string/first_tab"
+        android:textSize="@dimen/title_size"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/c_33"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/c_e0"
+        app:layout_constraintTop_toBottomOf="@id/txt_title"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/txt_title"
+        app:layout_constraintBottom_toTopOf="@id/bl_tab"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/c_e0"
+        app:layout_constraintTop_toBottomOf="@id/vp_content"/>
+    <com.lx.simplepass.views.BottomTabLayout
+        android:id="@+id/bl_tab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vp_content"/>
+</android.support.constraint.ConstraintLayout>

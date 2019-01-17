@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">简易通</string>
+    
+    <string name="first_tab">首页</string>
+    <string name="second_tab">沟通</string>
+    <string name="three_tab">功能</string>
+    <string name="four_tab">我的</string>
+</resources>
