@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/txt_tip"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="5dp"
+        android:text=""
+        android:textColor="@color/c_33"
+        android:textSize="@dimen/sp_17" />
+
+    <TextView
+        android:id="@+id/txt_title"
+        app:layout_constraintTop_toBottomOf="@id/txt_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="3dp"
+        android:textColor="@color/c_66"
+        android:textSize="@dimen/main_size" />
+
+    <TextView
+        android:id="@+id/txt_step_title"
+        app:layout_constraintTop_toBottomOf="@id/txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="步骤如下"
+        android:textColor="@color/c_33"
+        android:textSize="@dimen/sp_18" />
+
+</android.support.constraint.ConstraintLayout>

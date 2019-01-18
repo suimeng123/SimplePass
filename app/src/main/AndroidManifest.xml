@@ -24,6 +24,8 @@
         <activity android:name=".activity.MainFramworkActivity"/>
         <!-- 菜谱页面 -->
         <activity android:name=".activity.CookActivity"/>
+        <!-- 菜谱详情页面 -->
+        <activity android:name=".activity.CookDetailActivity"/>
     </application>
 
 </manifest>

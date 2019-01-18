@@ -6,10 +6,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.base.library.http.httputil.OkHttp3Util;
 import com.base.library.http.parser.BaseParser;
 import com.base.library.utils.MMKVUtil;
+import com.lx.simplepass.R;
 import com.lx.simplepass.parser.MyParser;
 import com.lx.simplepass.utils.ScreenAdapterUtil;
 
@@ -20,25 +25,13 @@ import com.lx.simplepass.utils.ScreenAdapterUtil;
  * 2019/1/9.
  */
 
-public class BaseActivity extends AppCompatActivity {
-    public Context mContext;
+public class BaseActivity extends BaseTitleActivity {
     public OkHttp3Util http3Util;
     public BaseParser parser;
 
     @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        ScreenAdapterUtil.setCustomDesnsity(APPApplication.getApplication(), this);
-    }
-
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getSupportActionBar() != null) {
-            // 隐藏标题栏
-            getSupportActionBar().hide();
-        }
-        mContext = this;
 
         /** 初始化网络请求解析器 可以自定义 **/
         parser = new MyParser();

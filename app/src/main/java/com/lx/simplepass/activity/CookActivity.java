@@ -1,9 +1,12 @@
 package com.lx.simplepass.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.base.library.lib.pullrefresh.PullToRefreshBase;
@@ -44,6 +47,8 @@ public class CookActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cook);
+        setHeaderVisiable(true);
+        setTitleText("菜谱列表");
     }
 
     @Override
@@ -85,6 +90,17 @@ public class CookActivity extends BaseActivity {
                 mLvList.setRefreshing();
             }
         }, 500);
+
+        mLvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position <= 0) {
+                    return;
+                }
+                FoodDetail foodDetail = mDatas.get(position - 1);
+                startActivity(new Intent(mContext, CookDetailActivity.class).putExtra("foodDetail", foodDetail));
+            }
+        });
     }
 
     /** 初始化食谱参数 **/
