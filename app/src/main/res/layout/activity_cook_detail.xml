@@ -5,7 +5,6 @@
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <ListView
         android:id="@+id/lv_list"
         android:layout_width="match_parent"

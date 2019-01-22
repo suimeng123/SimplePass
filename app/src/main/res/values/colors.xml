@@ -8,4 +8,7 @@
     <color name="tab_selected_color">#009DD6</color>
     <color name="color_bbb">#bbb</color>
     <color name="color_eee">#eee</color>
+
+
+    <color name="white">#ffffff</color>
 </resources>

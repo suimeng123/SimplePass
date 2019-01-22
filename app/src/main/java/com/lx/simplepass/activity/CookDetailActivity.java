@@ -44,7 +44,7 @@ public class CookDetailActivity extends BaseActivity {
     private ListView mLvList;
 
     private FoodDetailListAdapter adapter;
-    private List<FoodDetailItem> lists = new ArrayList<>();
+    private ArrayList<FoodDetailItem> lists = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

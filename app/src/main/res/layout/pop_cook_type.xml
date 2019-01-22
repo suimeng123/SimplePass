@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/main_size"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#4EB948"
+        android:text=""
+        android:padding="10dp"/>
+    <View
+        android:id="@+id/v_line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/c_e0"
+        app:layout_constraintTop_toBottomOf="@id/txt_title"/>
+    <ListView
+        android:id="@+id/lv_list1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_line"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:divider="@color/c_e0"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintRight_toLeftOf="@id/lv_list2"
+        android:dividerHeight="0px"
+        android:scrollbars="none"
+        />
+    <ListView
+        android:id="@+id/lv_list2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_line"
+        app:layout_constraintLeft_toRightOf="@id/lv_list1"
+        app:layout_constraintRight_toRightOf="parent"
+        android:divider="@color/c_e0"
+        android:dividerHeight="0px"
+        android:scrollbars="none"
+        />
+
+</android.support.constraint.ConstraintLayout>
