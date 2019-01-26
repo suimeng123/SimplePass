@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.lx.simplepass.R;
 import com.lx.simplepass.activity.CookActivity;
+import com.lx.simplepass.activity.WeixinPieceActivity;
+import com.lx.simplepass.activity.WelcomeActivity;
 import com.lx.simplepass.base.BaseFragment;
 
 /**
@@ -61,6 +63,7 @@ public class FirstPageFragment extends BaseFragment {
                 startActivity(new Intent(mContext, CookActivity.class));
                 break;
             case R.id.txt_weixin:
+                startActivity(new Intent(mContext, WeixinPieceActivity.class));
                 break;
             case R.id.txt_date:
                 break;

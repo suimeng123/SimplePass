@@ -3,13 +3,11 @@ package com.lx.simplepass.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.lx.simplepass.R;
 import com.lx.simplepass.adapter.BigImgPagerAdapter;
 import com.lx.simplepass.base.BaseActivity;
-import com.lx.simplepass.model.FoodDetail;
 import com.lx.simplepass.model.FoodDetailItem;
 
 import java.util.ArrayList;

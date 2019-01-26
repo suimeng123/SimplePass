@@ -82,6 +82,7 @@ public class BaseTitleActivity extends AppCompatActivity {
         if (header != null) {
             TextView tv = (TextView)header.findViewById(R.id.header_txt_title);
             tv.setText(title);
+            header.setVisibility(View.VISIBLE);
         }
     }
 

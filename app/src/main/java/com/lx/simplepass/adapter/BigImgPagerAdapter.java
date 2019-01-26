@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.lx.simplepass.R;
 import com.lx.simplepass.model.FoodDetailItem;
@@ -80,6 +81,18 @@ public class BigImgPagerAdapter extends PagerAdapter {
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
         FoodDetailItem item = mDatas.get(position);
         ImageView icon = ((View)object).findViewById(R.id.iv_img);
+        final TextView content = ((View) object).findViewById(R.id.tv_content);
+        content.setText(item.getStep());
+        icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (content.getVisibility() == View.VISIBLE) {
+                    content.setVisibility(View.GONE);
+                } else {
+                    content.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         ImageLoaderUtil.loadImgForUrl(mContext, item.getImg(), icon);
     }
 }

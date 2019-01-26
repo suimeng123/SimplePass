@@ -28,4 +28,6 @@ public class Constants {
     public final static String KEY_CITYS = "citys";
     /** 存储的菜谱类别key值 **/
     public final static String KEY_COOK_CATEGORY = "CookCategory";
+    /** 存储的微信段子类别key值 **/
+    public final static String KEY_WEIXIN_PIECE_CATEGORY = "weixinpiece";
 }

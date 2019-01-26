@@ -22,4 +22,9 @@ public class HttpUrl {
 
     /** 根据菜谱ID查询菜谱详细信息URL **/
     public static String GET_COOK_DETAIL_URL = BASE_URL + "/v1/cook/menu/query";
+
+    /** 根据条件查询微信精选列表URL **/
+    public static String GET_WEIXIN_PIECE_URL = BASE_URL + "/wx/article/search";
+    /** 根据条件查询微信精选类别URL **/
+    public static String GET_WEIXIN_CATEGORY_URL = BASE_URL + "/wx/article/category/query";
 }

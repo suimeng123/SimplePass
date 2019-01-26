@@ -24,10 +24,11 @@ import java.util.List;
 
 public class FoodTypeAdapter extends CommonAdapter {
 
-    public int selectedPosition = -1;
+    public List mDatas;
 
     public FoodTypeAdapter(Context context, List datas, int layoutId) {
         super(context, datas, layoutId);
+        mDatas = datas;
     }
 
     @Override
@@ -52,5 +53,9 @@ public class FoodTypeAdapter extends CommonAdapter {
             ViewUtil.setTextViewDrawable(mContext, tv, 4, 0);
             tv.setBackgroundColor(mContext.getResources().getColor(R.color.white));
         }
+    }
+
+    public List getDatas() {
+        return mDatas;
     }
 }

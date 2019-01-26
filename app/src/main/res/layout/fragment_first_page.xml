@@ -46,7 +46,7 @@
         android:layout_height="60dp"
         android:drawableTop="@mipmap/weixin_tb"
         android:gravity="center_horizontal"
-        android:text="微信段子"
+        android:text="微信精选"
         android:textSize="@dimen/second_size"
         android:textColor="@color/c_66"
         android:drawablePadding="10dp"

@@ -1,5 +1,6 @@
 package com.lx.simplepass.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +26,7 @@ import com.lx.simplepass.adapter.FoodTypeAdapter;
 import com.lx.simplepass.app.Constants;
 import com.lx.simplepass.app.HttpUrl;
 import com.lx.simplepass.base.BaseActivity;
+import com.lx.simplepass.base.CheckPermissFragment;
 import com.lx.simplepass.model.FoodDetail;
 import com.lx.simplepass.model.FoodSecondType;
 import com.lx.simplepass.model.FoodThreeType;
@@ -68,8 +70,13 @@ public class CookActivity extends BaseActivity {
     /** pop中两个列表适配器 **/
     private FoodTypeAdapter foodTypeAdapter, foodTypeAdapter2;
 
+    private int firstTypePosition = -1, secondTypePosition = -1, lastFirstTypePosition = -1;
+
     /** 是否加载了菜谱分类数据 用来打开pop时判断是否已经填充了数据 **/
     private boolean isLoadTypeData = false;
+
+
+    private CheckPermissFragment fragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,17 +88,31 @@ public class CookActivity extends BaseActivity {
         setRightTextClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (searchPop != null) {
-                    if (!isLoadTypeData) {
-                        initSearchList();
-                    }
-                    searchPop.showOrHidePopWindow(getTitleLayout());
+            if (searchPop != null) {
+                if (!isLoadTypeData) {
+                    initSearchList();
                 }
+                searchPop.showOrHidePopWindow(getTitleLayout());
+            }
+
             }
         });
         searchPop = new SearchPopLayout(this);
         searchPop.getInstance(R.layout.pop_cook_type, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        initSearchList();
+
+        fragment = CheckPermissFragment.getPermissFragment(this, new CheckPermissFragment.AuthPermissionListener() {
+            @Override
+            public void success() {
+                ToastUtil.showToast(mContext, "授权成功");
+            }
+
+            @Override
+            public void fail() {
+                ToastUtil.showToast(mContext, "授权失败");
+            }
+        });
+
+        fragment.checkPermission(new String[]{Manifest.permission.CAMERA});
     }
 
     @Override
@@ -164,7 +185,7 @@ public class CookActivity extends BaseActivity {
     }
 
     List<FoodSecondType> list = null;
-    List<FoodThreeType> list2 = null;
+    List<FoodThreeType> list2 = new ArrayList<>();
 
 
 
@@ -176,8 +197,8 @@ public class CookActivity extends BaseActivity {
                 ((TextView) searchPop.getView(R.id.txt_title)).setText(foodType.getCategoryInfo().getName());
             }
             list = foodType.getChilds();
-            list2 = null;
-            ListView listView = (ListView) searchPop.getView(R.id.lv_list1);
+            list2.clear();
+            final ListView listView = (ListView) searchPop.getView(R.id.lv_list1);
             final ListView listView2 = (ListView) searchPop.getView(R.id.lv_list2);
             if (list != null) {
                 foodTypeAdapter = new FoodTypeAdapter(mContext, list, R.layout.pop_listitem_food_type);
@@ -186,46 +207,80 @@ public class CookActivity extends BaseActivity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (position == foodTypeAdapter.selectedPosition) {
+                    if (position == firstTypePosition) {
                         // 同一个item 返回
                         return;
                     }
                     // 改变选择状态
                     FoodSecondType type = list.get(position);
                     type.getCategoryInfo().setiSelected(true);
-                    if (foodTypeAdapter.selectedPosition != -1) {
-                        list.get(foodTypeAdapter.selectedPosition).getCategoryInfo().setiSelected(false);
+                    if (firstTypePosition != -1) {
+                        list.get(firstTypePosition).getCategoryInfo().setiSelected(false);
                     }
                     foodTypeAdapter.notifyDataSetChanged();
-                    foodTypeAdapter.selectedPosition = position;
+
+                    firstTypePosition = position;
 
 
                     // 初始化下一级列表
-                    list2 = type.getChilds();
-                    foodTypeAdapter2 = new FoodTypeAdapter(mContext, list2, R.layout.pop_listitem_food_type);
-                    listView2.setAdapter(foodTypeAdapter2);
+                    list2.clear();
+                    if (type.getChilds() != null) {
+                        list2.addAll(type.getChilds());
+                        foodTypeAdapter2 = new FoodTypeAdapter(mContext, list2, R.layout.pop_listitem_food_type);
+                        listView2.setAdapter(foodTypeAdapter2);
+                    }
                 }
             });
             listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (position == foodTypeAdapter2.selectedPosition) {
+                    if (position == secondTypePosition) {
                         // 同一个item 返回
                         return;
                     }
                     // 同一个item 返回
                     FoodThreeType type = list2.get(position);
                     type.getCategoryInfo().setiSelected(true);
-                    if (foodTypeAdapter2.selectedPosition != -1) {
-                        list2.get(foodTypeAdapter2.selectedPosition).getCategoryInfo().setiSelected(false);
+                    if (secondTypePosition != -1) {
+                        list2.get(secondTypePosition).getCategoryInfo().setiSelected(false);
+                    }
+                    if (lastFirstTypePosition != firstTypePosition && lastFirstTypePosition != -1 && secondTypePosition != -1) {
+                        // 将上一次第二级菜单的选中状态去掉
+                        list.get(lastFirstTypePosition).getChilds().get(secondTypePosition).getCategoryInfo().setiSelected(false);
                     }
                     foodTypeAdapter2.notifyDataSetChanged();
-                    foodTypeAdapter2.selectedPosition = position;
+                    secondTypePosition = position;
+                    // 保存最后一次一级菜单的选中项
+                    lastFirstTypePosition = firstTypePosition;
 
                     // 开始搜索
                     cId = type.getCategoryInfo().getCtgId();
                     getCookList(0);
                     searchPop.showOrHidePopWindow(getTitleLayout());
+                }
+            });
+            searchPop.getView(R.id.txt_title).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cId = "";
+                    pageNo = 1;
+                    // 清除所有的选中状态 回到初始点
+                    if (firstTypePosition != -1) {
+                        list.get(firstTypePosition).getCategoryInfo().setiSelected(false);
+                    }
+                    if (lastFirstTypePosition != -1 && secondTypePosition != -1) {
+                        list.get(lastFirstTypePosition).getCategoryInfo().setiSelected(false);
+                        list.get(lastFirstTypePosition).getChilds().get(secondTypePosition).getCategoryInfo().setiSelected(false);
+                    }
+                    lastFirstTypePosition = -1;
+                    firstTypePosition = -1;
+                    secondTypePosition = -1;
+                    list2.clear();
+                    foodTypeAdapter.notifyDataSetChanged();
+                    foodTypeAdapter2.notifyDataSetChanged();
+                    searchPop.showOrHidePopWindow(getTitleLayout());
+
+                    getCookList(0);
                 }
             });
             isLoadTypeData = true;
@@ -266,6 +321,9 @@ public class CookActivity extends BaseActivity {
             case 1:
                 FoodType foodType = (FoodType) bundle.get(parser.getDataName());
                 MMKVUtil.setValue(Constants.KEY_COOK_CATEGORY, foodType);
+                if (foodType != null) {
+                    initSearchList();
+                }
                 break;
             case 2:
                 // 下拉

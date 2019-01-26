@@ -3,6 +3,7 @@
     package="com.lx.simplepass">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
     <application
         android:name=".base.APPApplication"
         android:allowBackup="true"
@@ -28,6 +29,10 @@
         <activity android:name=".activity.CookDetailActivity"/>
         <!-- 查看大图页面 -->
         <activity android:name=".activity.LookBigImgActivity"/>
+        <!-- 微信段子页面 -->
+        <activity android:name=".activity.WeixinPieceActivity"/>
+        <!-- 微信段子详情页面 -->
+        <activity android:name=".activity.WeixinPieceDetailActivity"/>
     </application>
 
 </manifest>
