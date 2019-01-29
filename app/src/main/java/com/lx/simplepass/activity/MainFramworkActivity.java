@@ -17,6 +17,7 @@ import com.lx.simplepass.app.HttpUrl;
 import com.lx.simplepass.base.BaseActivity;
 import com.lx.simplepass.base.BaseFragment;
 import com.lx.simplepass.fragment.FirstPageFragment;
+import com.lx.simplepass.fragment.LinkmanFragment;
 import com.lx.simplepass.model.Provinces;
 import com.lx.simplepass.views.BottomTabLayout;
 
@@ -28,7 +29,6 @@ public class MainFramworkActivity extends BaseActivity {
     private static final String TAG = MainFramworkActivity.class.getSimpleName();
     private BottomTabLayout btl;
     private ViewPager vp;
-    private TextView mTvTitle;
     private List<Fragment> fragments = new ArrayList<>();
 
 
@@ -36,21 +36,14 @@ public class MainFramworkActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitleText("首页");
+        setLeftBtnVisiable(false);
     }
 
     @Override
     public void initLayout() {
         btl = findViewById(R.id.bl_tab);
         vp = findViewById(R.id.vp_content);
-        mTvTitle = findViewById(R.id.txt_title);
-
-        mTvTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<Provinces> lists = (ArrayList<Provinces>) MMKVUtil.getValue("city", MMKVUtil.TYPE_JSONARRAY, Provinces.class);
-                ToastUtil.showToast(mContext, lists.size() + "---");
-            }
-        });
     }
 
     @Override
@@ -59,17 +52,15 @@ public class MainFramworkActivity extends BaseActivity {
         btl.setItemClickListener(new BottomTabLayout.ItemClickListener() {
             @Override
             public void onclick(int index) {
-                vp.setCurrentItem(index);
-                mTvTitle.setText(getResources().getText(Constants.names[index]));
+            vp.setCurrentItem(index);
+            setTitleText(getResources().getText(Constants.names[index]));
             }
         });
 
         Bundle bundle1 = new Bundle();
         bundle1.putString("title", getResources().getString(R.string.first_tab));
         Fragment f1 = BaseFragment.getInstance(FirstPageFragment.class, bundle1);
-        Bundle bundle2 = new Bundle();
-        bundle2.putString("title", getResources().getString(R.string.second_tab));
-        Fragment f2 = BaseFragment.getInstance(FirstPageFragment.class, bundle2);
+        Fragment f2 = BaseFragment.getInstance(LinkmanFragment.class, null);
         Bundle bundle3 = new Bundle();
         bundle3.putString("title", getResources().getString(R.string.three_tab));
         Fragment f3 = BaseFragment.getInstance(FirstPageFragment.class, bundle3);

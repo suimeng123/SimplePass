@@ -20,6 +20,8 @@ import java.util.List;
 
 public class WeixinPieceTypeAdapter extends CommonAdapter {
 
+    public int selectedPosition = -1;
+
     public WeixinPieceTypeAdapter(Context context, List datas, int layoutId) {
         super(context, datas, layoutId);
     }
@@ -29,5 +31,12 @@ public class WeixinPieceTypeAdapter extends CommonAdapter {
         WeixinPieceType type = (WeixinPieceType) o;
         TextView text = holder.getView(R.id.tv_title);
         text.setText(type.getName());
+        if (selectedPosition == holder.getPosition()) {
+            text.setBackgroundResource(R.drawable.bg_weixin_piece_type_item_selected);
+            text.setTextColor(mContext.getResources().getColor(R.color.white));
+        } else {
+            text.setBackgroundResource(R.drawable.bg_weixin_piece_type_item);
+            text.setTextColor(mContext.getResources().getColor(R.color.c_33));
+        }
     }
 }

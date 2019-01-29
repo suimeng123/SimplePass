@@ -1,6 +1,7 @@
 package com.lx.simplepass.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,10 +51,27 @@ public class CheckPermissFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // 防止重复创建fragment
         setRetainInstance(true);
+        Log.i(TAG, "onCreate: ");
     }
 
-    public static CheckPermissFragment getPermissFragment(AppCompatActivity context, CheckPermissFragment.AuthPermissionListener listener) {
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Log.i(TAG, "onAttach: " + (getActivity() == null));
+    }
+
+    /** 通过Fragment获取 **/
+    public static CheckPermissFragment getPermissFragmentForFragment(BaseFragment context, CheckPermissFragment.AuthPermissionListener listener) {
+        FragmentManager manager = context.getChildFragmentManager();
+        return getPermissFragment(manager, context, listener);
+    }
+    /** 通过activity获取 **/
+    public static CheckPermissFragment getPermissFragmentForActivity(AppCompatActivity context, CheckPermissFragment.AuthPermissionListener listener) {
         FragmentManager manager = context.getSupportFragmentManager();
+        return getPermissFragment(manager, context, listener);
+    }
+
+    private static CheckPermissFragment getPermissFragment(FragmentManager manager, Object context, CheckPermissFragment.AuthPermissionListener listener) {
         Fragment fragment = manager.findFragmentByTag(context.getClass().getSimpleName());
         if (fragment == null) {
             // 如果不存在 就创建一个
@@ -60,7 +79,7 @@ public class CheckPermissFragment extends Fragment {
             CheckPermissFragment permissFragment = new CheckPermissFragment();
             transaction.add(permissFragment, context.getClass().getSimpleName());
             transaction.commit();
-            manager.executePendingTransactions();
+//            manager.executePendingTransactions();
             permissFragment.addAuthPermissionListener(listener);
             return permissFragment;
         } else {
@@ -96,7 +115,7 @@ public class CheckPermissFragment extends Fragment {
             case PERMISSION_OK:
                 if (grantResults.length > 0 && !isAllPermissionPass(grantResults)) {
                     // 没有权限
-                    ToastUtil.showToast(getActivity(), "相关权限授权失败");
+                    ToastUtil.showToast(getContext(), "相关权限授权失败");
                     listener.fail();
                 } else {
                     // 已经有权限

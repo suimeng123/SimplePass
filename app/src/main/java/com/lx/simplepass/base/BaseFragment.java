@@ -30,6 +30,8 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getContext();
+        // 防止重复创建fragment
+        setRetainInstance(true);
 
         /** 初始化网络请求解析器 可以自定义 **/
         parser = new MyParser();

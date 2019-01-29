@@ -75,9 +75,6 @@ public class CookActivity extends BaseActivity {
     /** 是否加载了菜谱分类数据 用来打开pop时判断是否已经填充了数据 **/
     private boolean isLoadTypeData = false;
 
-
-    private CheckPermissFragment fragment;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,19 +97,6 @@ public class CookActivity extends BaseActivity {
         searchPop = new SearchPopLayout(this);
         searchPop.getInstance(R.layout.pop_cook_type, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
-        fragment = CheckPermissFragment.getPermissFragment(this, new CheckPermissFragment.AuthPermissionListener() {
-            @Override
-            public void success() {
-                ToastUtil.showToast(mContext, "授权成功");
-            }
-
-            @Override
-            public void fail() {
-                ToastUtil.showToast(mContext, "授权失败");
-            }
-        });
-
-        fragment.checkPermission(new String[]{Manifest.permission.CAMERA});
     }
 
     @Override

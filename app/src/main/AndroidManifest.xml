@@ -3,7 +3,18 @@
     package="com.lx.simplepass">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 照相机权限 -->
     <uses-permission android:name="android.permission.CAMERA"/>
+
+    <!-- 读联系人权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 写联系人权限 -->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <!-- 拨号权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 读短信权限 -->
+    <uses-permission android:name="android.permission.READ_SMS" />
+
     <application
         android:name=".base.APPApplication"
         android:allowBackup="true"
@@ -22,17 +33,23 @@
         </activity>
 
         <!-- 主页面 -->
-        <activity android:name=".activity.MainFramworkActivity"/>
+        <activity android:name=".activity.MainFramworkActivity"
+            android:fitsSystemWindows="true"/>
         <!-- 菜谱页面 -->
-        <activity android:name=".activity.CookActivity"/>
+        <activity android:name=".activity.CookActivity"
+            android:fitsSystemWindows="true"/>
         <!-- 菜谱详情页面 -->
-        <activity android:name=".activity.CookDetailActivity"/>
+        <activity android:name=".activity.CookDetailActivity"
+            android:fitsSystemWindows="true"/>
         <!-- 查看大图页面 -->
-        <activity android:name=".activity.LookBigImgActivity"/>
+        <activity android:name=".activity.LookBigImgActivity"
+            android:fitsSystemWindows="true"/>
         <!-- 微信段子页面 -->
-        <activity android:name=".activity.WeixinPieceActivity"/>
+        <activity android:name=".activity.WeixinPieceActivity"
+            android:fitsSystemWindows="true"/>
         <!-- 微信段子详情页面 -->
-        <activity android:name=".activity.WeixinPieceDetailActivity"/>
+        <activity android:name=".activity.WeixinPieceDetailActivity"
+            android:fitsSystemWindows="true"/>
     </application>
 
 </manifest>

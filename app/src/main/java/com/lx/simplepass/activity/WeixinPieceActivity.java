@@ -125,6 +125,11 @@ public class WeixinPieceActivity extends BaseActivity {
         mGVContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == typeAdapter.selectedPosition) {
+                    return;
+                }
+                typeAdapter.selectedPosition = position;
+                typeAdapter.notifyDataSetChanged();
                 WeixinPieceType item = types.get(position);
                 cId = item.getCid();
                 pageNo = 1;

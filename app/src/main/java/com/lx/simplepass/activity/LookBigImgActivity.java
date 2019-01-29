@@ -38,7 +38,6 @@ public class LookBigImgActivity extends BaseActivity {
 
         getTitleLayout().setBackgroundColor(getResources().getColor(android.R.color.black));
         setTextTitleColor(getResources().getColor(android.R.color.white));
-        getTitleLayout().findViewById(R.id.header_v_line).setVisibility(View.GONE);
     }
 
     @Override

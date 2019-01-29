@@ -36,4 +36,6 @@ dependencies {
     compile 'com.base.library:baselibrary:0.0.7'
     implementation project(':ocr_ui')
     implementation files('libs/ocr-sdk.jar')
+
+//    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
 }

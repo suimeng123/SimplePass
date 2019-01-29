@@ -1,18 +1,23 @@
 package com.lx.simplepass.base;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.base.library.utils.BarsUtil;
 import com.lx.simplepass.R;
+import com.lx.simplepass.utils.CommUtils;
 import com.lx.simplepass.utils.ScreenAdapterUtil;
 
 import org.w3c.dom.Text;
@@ -25,6 +30,7 @@ import org.w3c.dom.Text;
  */
 
 public class BaseTitleActivity extends AppCompatActivity {
+    private static final String TAG = "BaseTitleActivity";
     private View header;
     public Context mContext;
     @Override
@@ -40,6 +46,8 @@ public class BaseTitleActivity extends AppCompatActivity {
             // 隐藏标题栏
             getSupportActionBar().hide();
         }
+        BarsUtil.setStatusBarTranslucent(this);
+        CommUtils.setAndroidNativeLightStatusBar(this, false);
         mContext = this;
     }
 
@@ -50,8 +58,11 @@ public class BaseTitleActivity extends AppCompatActivity {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setLayoutParams(params);
         View content = LayoutInflater.from(mContext).inflate(layoutResID,layout, false);
-        header = LayoutInflater.from(mContext).inflate(R.layout.header_common_layout, null);
+        header = LayoutInflater.from(mContext).inflate(R.layout.header_common_layout, layout, false);
         header.setVisibility(View.GONE);
+        int height = CommUtils.getStateBarHeight(this);
+        RelativeLayout rl = header.findViewById(R.id.header_rl_top);
+        rl.setPadding(0,height,0,0);
         layout.addView(header);
         setLeftBtnOnclick(null);
         layout.addView(content);
@@ -64,6 +75,17 @@ public class BaseTitleActivity extends AppCompatActivity {
                 header.setVisibility(View.VISIBLE);
             } else {
                 header.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    public void setLeftBtnVisiable(boolean isShow) {
+        if (header != null) {
+            View view = header.findViewById(R.id.header_iv_left);
+            if (isShow) {
+                view.setVisibility(View.VISIBLE);
+            } else {
+                view.setVisibility(View.GONE);
             }
         }
     }
